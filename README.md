@@ -8,7 +8,7 @@ A lightweight Python data analysis project that cleans, visualises, and interpre
 
 ## Live Demo
 
-[https://Jei-Yi-Lu.github.io/big5-mini-explorer/](https://Jei-Yi-Lu.github.io/big5-mini-explorer/)
+[https://Jie-Yi-Lu.github.io/big5-mini-explorer/](https://Jie-Yi-Lu.github.io/big5-mini-explorer/)
 
 ---
 
