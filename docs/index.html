@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Big Five Mini Explorer</title>
+  <style>
+    :root {
+      --navy:   rgb(21,  53,  95);
+      --cream:  rgb(252, 251, 245);
+      --blue:   rgb(21,  108, 154);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      color: var(--navy);
+      font-family: "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    header {
+      background: var(--navy);
+      color: var(--cream);
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    header p.tagline {
+      font-size: 1.1rem;
+      opacity: 0.85;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    section { margin-bottom: 3rem; }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--blue);
+      border-bottom: 2px solid var(--blue);
+      padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
+    }
+
+    ol, ul {
+      padding-left: 1.5rem;
+    }
+
+    ol li, ul li { margin-bottom: 0.5rem; }
+
+    .figure-block {
+      margin: 1.5rem 0;
+    }
+
+    .figure-block img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #d0cfc8;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .figure-block figcaption {
+      margin-top: 0.6rem;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .caveat-list li { margin-bottom: 0.6rem; }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    .repo-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.55rem 1.4rem;
+      background: var(--blue);
+      color: var(--cream);
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .repo-link:hover {
+      background: var(--navy);
+      text-decoration: none;
+    }
+
+    footer {
+      background: var(--navy);
+      color: var(--cream);
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.92rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Big Five Mini Explorer</h1>
+  <p class="tagline">以 Python 分析大型公開資料：Big Five 人格特質是否因性別與年齡而系統性地變動</p>
+</header>
+
+<main>
+
+  <!-- 1. Goal -->
+  <section>
+    <h2>Goal ／ 研究目標</h2>
+    <p>
+      本專案以 Open Psychometrics 公開的大型 Big Five 人格問卷資料（n = 19,719）為基礎，探索兩個問題：
+      （1）五個人格特質（OCEAN）的分數分布在男性與女性之間是否存在可觀察的差異？
+      （2）外向性（Extraversion）分數是否隨年齡呈現有意義的趨勢？
+    </p>
+  </section>
+
+  <!-- 2. Procedure -->
+  <section>
+    <h2>Procedure ／ 分析過程</h2>
+    <ol>
+      <li><strong>資料來源</strong>：從 Open Psychometrics 下載 BIG5.zip，解壓後得到 tab 分隔的問卷原始資料，包含 50 道 Likert 量表題（E1–E10、N1–N10、A1–A10、C1–C10、O1–O10）以及人口學變項。</li>
+      <li><strong>資料清理</strong>：排除年齡不合理的受試者（保留 13–80 歲），並移除性別填寫為「未說明（0）」的列，最終保留 19,608 筆（流失 0.6%）。</li>
+      <li><strong>特質分數計算</strong>：將各特質的 10 道題目加總，得到每位受試者的 E、N、A、C、O 分數（各 10–50 分）。</li>
+      <li><strong>描述性分析</strong>：以小提琴圖（violin plot）比較男女在五個特質分數上的分布形狀與中位數差異。</li>
+      <li><strong>關係分析</strong>：以每五歲為一個年齡區間（age bin），計算各區間的外向性平均值與 95% 信賴區間，繪製趨勢折線圖。</li>
+      <li><strong>防禦性設計</strong>：程式碼採 Style C（Plan-first）方式撰寫，執行前先確認欄位數、欄位型別及遺漏值，確保在不同環境下可重現。</li>
+    </ol>
+  </section>
+
+  <!-- 3. Outcome -->
+  <section>
+    <h2>Outcome ／ 結果</h2>
+
+    <div class="figure-block">
+      <figure>
+        <img src="fig1_violin_gender.png" alt="Big Five trait score distribution by gender" />
+        <figcaption>
+          <strong>Figure 1</strong> — 五個人格特質分數的性別差異（小提琴圖）。
+          女性在神經質（N）與親和性（A）上明顯偏高；男性在外向性（E）與開放性（O）上略高，與人格心理學文獻中既有的性別差異方向一致。
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="figure-block">
+      <figure>
+        <img src="fig2_extraversion_age.png" alt="Extraversion score trend across age groups" />
+        <figcaption>
+          <strong>Figure 2</strong> — 外向性分數隨年齡的趨勢（binned mean ± 95% CI）。
+          外向性在青少年晚期至成年早期達到高峰，隨後呈現持續且穩定的下降，符合縱貫研究中「社交主導性隨年齡降低」的發現。
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 4. Caveats -->
+  <section>
+    <h2>Caveats ／ 研究侷限</h2>
+    <ul class="caveat-list">
+      <li><strong>取樣偏誤</strong>：資料來自主動上網填寫問卷的使用者，在年齡、教育程度、網路使用習慣上存在系統性偏差，不能代表一般大眾。</li>
+      <li><strong>自陳量表的限制</strong>：Big Five 為自填問卷，受社會期許（social desirability bias）影響，受試者可能高報或低報特定特質。</li>
+      <li><strong>橫斷面設計</strong>：年齡趨勢圖是橫斷面資料，不同年齡組反映的是不同世代（cohort），無法直接推論個體隨時間的變化。</li>
+      <li><strong>分數未做反向計分</strong>：本分析直接加總原始分數，未對反向題進行校正，可能略微影響各特質分數的準確性。</li>
+    </ul>
+  </section>
+
+  <!-- 5. Repo link -->
+  <section>
+    <h2>GitHub Repository</h2>
+    <p>完整程式碼、notebooks 與資料下載說明請見：</p>
+    <a class="repo-link" href="https://github.com/Jie-Yi-Lu/big5-mini-explorer" target="_blank">
+      github.com/Jie-Yi-Lu/big5-mini-explorer
+    </a>
+  </section>
+
+  <!-- 6. Author + Date -->
+  <section>
+    <h2>Author</h2>
+    <p>
+      <strong>呂杰驛（Jie-Yi Lu）</strong>，學號 113825002<br />
+      國立中央大學　認知神經科學研究所　碩二生<br />
+      National Central University, Graduate Institute of Cognitive Neuroscience<br />
+      Last updated: 2026-05-06
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  Big Five Mini Explorer &nbsp;·&nbsp; 呂杰驛 &nbsp;·&nbsp; NCU Cognitive Neuroscience 2026
+</footer>
+
+</body>
+</html>
