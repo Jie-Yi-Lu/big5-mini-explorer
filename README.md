@@ -2,7 +2,6 @@
 
 以 Python 分析大型公開資料：Big Five 人格特質是否因性別與年齡而系統性地變動
 
-
 ---
 
 ## Live Demo
