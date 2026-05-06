@@ -1,8 +1,8 @@
-> 探索 Big Five（OCEAN）人格特質問卷資料的輕量分析專案。
-
 # Big Five Mini Explorer
 
 A lightweight Python data analysis project that cleans, visualises, and interprets Big Five (OCEAN) personality survey data from Open Psychometrics.
+以 Python 分析 Big Five 人格特質是否因性別與年齡而系統性地變動
+
 
 ---
 
